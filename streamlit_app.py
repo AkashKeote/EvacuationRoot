@@ -19,6 +19,13 @@ st.set_page_config(
 # Custom CSS for emergency styling
 st.markdown("""
 <style>
+    /* Force dark theme for all components */
+    .stApp {
+        background-color: #0e1117;
+        color: #ffffff;
+    }
+    
+    /* Main header styling */
     .main-header {
         background: linear-gradient(135deg, #dc3545, #fd7e14, #ffc107);
         padding: 25px;
@@ -35,6 +42,7 @@ st.markdown("""
         100% { box-shadow: 0 8px 16px rgba(0,0,0,0.3); }
     }
     
+    /* Emergency alert styling */
     .emergency-alert {
         background: #dc3545;
         color: white;
@@ -51,11 +59,67 @@ st.markdown("""
         51%, 100% { opacity: 0.7; }
     }
     
+    /* Force dark background for metrics */
     .stMetric {
-        background: white;
+        background: #1e2126 !important;
+        color: #ffffff !important;
         padding: 1rem;
         border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        border: 1px solid #333;
+    }
+    
+    /* Metric labels and values */
+    .stMetric > div {
+        color: #ffffff !important;
+    }
+    
+    .stMetric label {
+        color: #ffffff !important;
+    }
+    
+    /* Route cards styling */
+    div[data-testid="metric-container"] {
+        background: #1e2126 !important;
+        border: 1px solid #333 !important;
+        border-radius: 10px !important;
+        padding: 1rem !important;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
+    }
+    
+    /* All text in metrics should be white */
+    div[data-testid="metric-container"] * {
+        color: #ffffff !important;
+    }
+    
+    /* Sidebar styling */
+    .css-1d391kg {
+        background-color: #262730;
+    }
+    
+    /* Column containers */
+    .element-container {
+        background: transparent;
+    }
+    
+    /* Force white text everywhere */
+    .stMarkdown, .stText, p, span, div {
+        color: #ffffff !important;
+    }
+    
+    /* Input fields */
+    .stTextInput input {
+        background-color: #1e2126 !important;
+        color: #ffffff !important;
+        border: 1px solid #333 !important;
+    }
+    
+    /* Buttons */
+    .stButton button {
+        background: linear-gradient(135deg, #dc3545, #c82333) !important;
+        color: white !important;
+        border: none !important;
+        font-weight: bold !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -574,8 +638,8 @@ if st.session_state.routes_computed:
             
             # Route header
             st.markdown(f"""
-            <div style="background: {header_color}; color: white; padding: 15px; border-radius: 10px; margin: 20px 0; text-align: center;">
-                <h2 style="margin: 0; color: white;">🛣️ ROUTE {i+1}: To {route['destination']} {risk_color}</h2>
+            <div style="background: {header_color}; color: white; padding: 15px; border-radius: 10px; margin: 20px 0; text-align: center; border: 2px solid #333;">
+                <h2 style="margin: 0; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">🛣️ ROUTE {i+1}: To {route['destination']} {risk_color}</h2>
             </div>
             """, unsafe_allow_html=True)
             
@@ -596,17 +660,21 @@ if st.session_state.routes_computed:
             
             with detail_col1:
                 st.markdown(f"""
-                **🛡️ Safety Level:** {route['risk_level']}  
-                **⚡ Priority:** {route['evacuation_priority']}  
-                **🚀 Improvement:** +{route['safety_improvement']} points
-                """)
+                <div style="background: #1e2126; padding: 15px; border-radius: 10px; border: 1px solid #333; margin: 10px 0;">
+                    <p style="color: #ffffff; margin: 5px 0;"><strong>🛡️ Safety Level:</strong> {route['risk_level']}</p>
+                    <p style="color: #ffffff; margin: 5px 0;"><strong>⚡ Priority:</strong> {route['evacuation_priority']}</p>
+                    <p style="color: #ffffff; margin: 5px 0;"><strong>🚀 Improvement:</strong> +{route['safety_improvement']} points</p>
+                </div>
+                """, unsafe_allow_html=True)
             
             with detail_col2:
                 st.markdown(f"""
-                **🚗 Transport:** {route['transport']}  
-                **👥 Population:** {route['population_density']:,}/km²  
-                **⭐ Score:** {route['route_score']} (lower = better)
-                """)
+                <div style="background: #1e2126; padding: 15px; border-radius: 10px; border: 1px solid #333; margin: 10px 0;">
+                    <p style="color: #ffffff; margin: 5px 0;"><strong>🚗 Transport:</strong> {route['transport']}</p>
+                    <p style="color: #ffffff; margin: 5px 0;"><strong>👥 Population:</strong> {route['population_density']:,}/km²</p>
+                    <p style="color: #ffffff; margin: 5px 0;"><strong>⭐ Score:</strong> {route['route_score']} (lower = better)</p>
+                </div>
+                """, unsafe_allow_html=True)
             
             st.markdown("---")
         
